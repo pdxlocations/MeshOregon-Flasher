@@ -1,0 +1,19 @@
+{
+  "name": "meshoregon-flasher",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.js",
+    "dev": "php -S 127.0.0.1:8080 -t dist"
+  },
+  "dependencies": {
+    "esptool-js": "0.7.1",
+    "fflate": "0.8.2",
+    "spark-md5": "3.0.2"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

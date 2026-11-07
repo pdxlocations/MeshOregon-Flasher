@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Install firmware from the MeshOregon branch.">
+  <title>MeshOregon Web Flasher</title>
+  <link rel="icon" href="icon.webp" type="image/webp">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="assets/app.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header><a href="https://meshoregon.com" aria-label="MeshOregon.com"><img src="logo.webp" alt="MeshOregon.com" width="320" height="52"></a></header>
+    <main>
+      <h1>Web flasher</h1>
+      <section class="installer" aria-label="Firmware installer">
+        <div class="release-line"><span id="release">Loading firmware…</span><a id="release-link" hidden target="_blank" rel="noopener">Release ↗</a></div>
+        <label for="board">Radio</label>
+        <select id="board" disabled><option value="">Loading radios…</option></select>
+        <p id="hint" class="hint">Connect your radio with a USB data cable.</p>
+        <label class="checkbox-row" id="erase-option" hidden><input type="checkbox" id="full-erase" checked> Full erase (recommended)</label>
+        <button id="install" disabled><span id="button-label">Connect & install</span></button>
+        <div class="secondary"><a id="download" hidden>Download firmware</a><button id="retry" class="text-button" hidden>Try again</button></div>
+        <progress id="progress" max="100" value="0" hidden aria-label="Installation progress"></progress>
+        <p id="status" role="status" aria-live="polite"></p>
+        <details id="diagnostics" hidden><summary>Connection details</summary><pre id="log"></pre></details>
+      </section>
+      <p class="compatibility" id="compatibility">USB flashing requires Chrome or Edge.</p>
+    </main>
+  </div>
+  <dialog id="confirm"><form method="dialog"><h2 id="confirm-title">Erase & install?</h2><p id="confirm-board"></p><p id="confirm-warning">This erases all saved settings, messages, and identity keys. Back up your radio first.</p><div class="dialog-actions"><button value="cancel" class="cancel">Cancel</button><button id="confirm-install" value="install">Erase & install</button></div></form></dialog>
+</body>
+</html>
