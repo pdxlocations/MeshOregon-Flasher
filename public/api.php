@@ -51,17 +51,18 @@ function cached(string $key, callable $load): array {
 }
 
 function releaseInfo(?int $id): array {
-    $result = cached('release-' . ($id ?? 'latest'), function () use ($id) {
+    $result = cached('release-' . ($id ?? 'latest-published'), function () use ($id) {
         if ($id !== null) {
             $release = requestJSON('/releases/' . $id);
         } else {
             $release = null;
-            for ($page = 1; $page <= 5 && $release === null; $page++) {
+            // GitHub's list order can differ from publication order.
+            for ($page = 1; $page <= 5; $page++) {
                 $items = requestJSON('/releases?per_page=30&page=' . $page);
                 foreach ($items as $item) {
-                    if (strpos($item['tag_name'] ?? '', RELEASE_PREFIX) === 0 && !($item['draft'] ?? true)) {
+                    if (strpos($item['tag_name'] ?? '', RELEASE_PREFIX) === 0 && !($item['draft'] ?? true) &&
+                        !empty($item['published_at']) && ($release === null || strcmp($item['published_at'], $release['published_at']) > 0)) {
                         $release = $item;
-                        break;
                     }
                 }
                 if (count($items) < 30) break;
